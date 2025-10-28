@@ -1,62 +1,78 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dau animat</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      margin-top: 60px;
-      background: #f2f2f2;
-    }
-    #resultat {
-      font-size: 60px;
-      margin: 20px;
-      font-weight: bold;
-      transition: transform 0.1s ease;
-    }
-    button {
-      background-color: #444;
-      color: white;
-      border: none;
-      padding: 10px 25px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 18px;
-    }
-    button:hover {
-      background-color: #222;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dau</title>
+<style>
+  body {
+    font-family: sans-serif;
+    text-align: center;
+    margin-top: 80px;
+    background: #f2f2f2;
+  }
+  #resultat {
+    font-size: 80px;
+    margin: 30px;
+    font-weight: bold;
+    transition: transform 0.1s ease;
+  }
+  button {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+  button:hover {
+    background-color: #222;
+  }
+</style>
 </head>
 <body>
-  <h1>🎲 Llança el dau!</h1>
-  <div id="resultat">-</div>
+  <h1>🎲 Llança el dau</h1>
+  <div id="resultat">+</div>
   <button id="llencaBtn">Llençar</button>
 
-  <script>
-    const resultat = document.getElementById('resultat');
-    const boto = document.getElementById('llencaBtn');
+<script>
+const resultat = document.getElementById('resultat');
+const boto = document.getElementById('llencaBtn');
 
-    boto.addEventListener('click', () => {
-      boto.disabled = true; // desactiva durant l'animació
-      let comptador = 0;
-      const interval = setInterval(() => {
-        const valor = Math.floor(Math.random() * 6) + 1;
-        resultat.textContent = valor;
-        resultat.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
-        comptador++;
-        if (comptador > 15) { // després de 15 canvis, s’atura
-          clearInterval(interval);
-          const final = Math.floor(Math.random() * 6) + 1;
-          resultat.textContent = final;
-          resultat.style.transform = 'rotate(0deg)';
-          boto.disabled = false;
-        }
-      }, 80);
-    });
-  </script>
+// cares del dau
+const cares = ['+','+','-','-','0','0'];
+
+// colors per cara
+function colorPer(face){
+  if(face === '+') return 'green';
+  if(face === '-') return 'red';
+  return 'orange';
+}
+
+boto.addEventListener('click', () => {
+  boto.disabled = true; // desactiva el botó durant animació
+  let comptador = 0;
+  const passos = Math.floor(Math.random()*10 + 15); // 15-25 canvis
+  const anim = setInterval(() => {
+    const cara = cares[Math.floor(Math.random()*cares.length)];
+    resultat.textContent = cara;
+    resultat.style.color = colorPer(cara);
+    resultat.style.transform = `rotate(${Math.random()*20-10}deg)`;
+
+    comptador++;
+    // efecte de frenada progressiva
+    if(comptador >= passos){
+      clearInterval(anim);
+      // valor final
+      const final = cares[Math.floor(Math.random()*cares.length)];
+      resultat.textContent = final;
+      resultat.style.color = colorPer(final);
+      resultat.style.transform = 'rotate(0deg)';
+      boto.disabled = false;
+    }
+  }, 80);
+});
+</script>
 </body>
 </html>

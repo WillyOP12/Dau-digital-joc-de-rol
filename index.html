@@ -71,10 +71,12 @@
     (function(){
       const diceEl = document.getElementById('dice');
       const rollBtn = document.getElementById('rollBtn');
+      const fastBtn = document.getElementById('fastBtn');
+      const multiBtn = document.getElementById('multiBtn');
       const soundToggle = document.getElementById('soundToggle');
       const resultText = document.getElementById('resultText');
 
-      const faces = ['+','-','0'];
+      const faces = ['+','+','-','-','0','0'];
       let audioOn = true;
       let audioCtx = null;
 
